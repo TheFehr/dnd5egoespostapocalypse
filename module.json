@@ -22,7 +22,9 @@
     }
   ],
   "relationships": {
-    "systems": [],
+    "systems": [
+      "dnd5e"
+    ],
     "requires": []
   },
   "esmodules": [
