@@ -21,10 +21,10 @@
       "url": "https://github.com/TheFehr"
     }
   ],
+  "system": [
+    "dnd5e"
+  ],
   "relationships": {
-    "systems": [
-      "dnd5e"
-    ],
     "requires": []
   },
   "esmodules": [
@@ -50,28 +50,45 @@
   "readme": "README.md",
   "packs": [
     {
-        "name": "mutation-roll-tables",
-        "label": "Mutation Roll Tables",
-        "path": "./packs/mutation-tables.db",
-        "entity": "RollTable",
-        "type": "RollTable"
-    },
-    {
-        "name": "module-macros",
-        "label": "5EGGW Macros",
-        "path": "./packs/macros.db",
-        "entity": "Macro",
-        "type": "Macro"
-    },
-    {
-      "name": "mutation-features",
-      "label": "Mutations",
-      "path": "./packs/mutations.db",
-      "entity": "Item",
-      "type": "Feature",
+      "name": "classes-5eggw",
+      "label": "Classes (5EGGW)",
+      "path": "./packs/classes-5eggw.db",
+      "type": "Item",
       "system": "dnd5e"
+    },
+    {
+      "name": "classes-features-5eggw",
+      "label": "Classes Features (5EGGW)",
+      "path": "./packs/classes-features-5eggw.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "subclasses-5eggw",
+      "label": "Sub-Classes (5EGGW)",
+      "path": "./packs/subclasses-5eggw.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "mutations-5eggw",
+      "label": "Mutations (5EGGW)",
+      "path": "./packs/mutations-5eggw.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "mutation-tables-5eggw",
+      "label": "Mutation Roll Tables (5EGGW)",
+      "path": "./packs/mutation-tables-5eggw.db",
+      "type": "RollTable"
+    },
+    {
+      "name": "macros-5eggw",
+      "label": "Macros (5EGGW)",
+      "path": "./packs/macros-5eggw.db",
+      "type": "Macro"
     }
-
   ],
   "media": [
     {
