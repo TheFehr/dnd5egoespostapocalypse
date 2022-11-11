@@ -48,6 +48,31 @@
   "download": "This is auto replaced",
   "license": "LICENSE",
   "readme": "README.md",
+  "packs": [
+    {
+        "name": "mutation-roll-tables",
+        "label": "Mutation Roll Tables",
+        "path": "./packs/mutation-tables.db",
+        "entity": "RollTable",
+        "type": "RollTable"
+    },
+    {
+        "name": "module-macros",
+        "label": "5EGGW Macros",
+        "path": "./packs/macros.db",
+        "entity": "Macro",
+        "type": "Macro"
+    },
+    {
+      "name": "mutation-features",
+      "label": "Mutations",
+      "path": "./packs/mutations.db",
+      "entity": "Item",
+      "type": "Feature",
+      "system": "dnd5e"
+    }
+
+  ],
   "media": [
     {
       "type": "icon",
