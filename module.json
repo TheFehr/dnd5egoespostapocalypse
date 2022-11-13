@@ -25,7 +25,11 @@
     "dnd5e"
   ],
   "relationships": {
-    "requires": []
+    "requires": [
+      { 
+        "id": "dae"
+      }
+    ]
   },
   "esmodules": [
     "scripts/module.js"
@@ -57,14 +61,14 @@
       "system": "dnd5e"
     },
     {
-      "name": "classes-features-5egpa",
-      "label": "Classes Features (5EGPA)",
+      "name": "class-features-5egpa",
+      "label": "Class Features (5EGPA)",
       "path": "./packs/classes-features-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
-      "name": "subclasses-5egpa",
+      "name": "sub-classes-5egpa",
       "label": "Sub-Classes (5EGPA)",
       "path": "./packs/subclasses-5egpa.db",
       "type": "Item",
