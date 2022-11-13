@@ -50,43 +50,43 @@
   "readme": "README.md",
   "packs": [
     {
-      "name": "classes-5eggw",
-      "label": "Classes (5EGGW)",
-      "path": "./packs/classes-5eggw.db",
+      "name": "classes-5egpa",
+      "label": "Classes (5EGPA)",
+      "path": "./packs/classes-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
-      "name": "classes-features-5eggw",
-      "label": "Classes Features (5EGGW)",
-      "path": "./packs/classes-features-5eggw.db",
+      "name": "classes-features-5egpa",
+      "label": "Classes Features (5EGPA)",
+      "path": "./packs/classes-features-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
-      "name": "subclasses-5eggw",
-      "label": "Sub-Classes (5EGGW)",
-      "path": "./packs/subclasses-5eggw.db",
+      "name": "subclasses-5egpa",
+      "label": "Sub-Classes (5EGPA)",
+      "path": "./packs/subclasses-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
-      "name": "mutations-5eggw",
-      "label": "Mutations (5EGGW)",
-      "path": "./packs/mutations-5eggw.db",
+      "name": "mutations-5egpa",
+      "label": "Mutations (5EGPA)",
+      "path": "./packs/mutations-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
-      "name": "mutation-tables-5eggw",
-      "label": "Mutation Roll Tables (5EGGW)",
-      "path": "./packs/mutation-tables-5eggw.db",
+      "name": "mutation-tables-5egpa",
+      "label": "Mutation Roll Tables (5EGPA)",
+      "path": "./packs/mutation-tables-5egpa.db",
       "type": "RollTable"
     },
     {
-      "name": "macros-5eggw",
-      "label": "Macros (5EGGW)",
-      "path": "./packs/macros-5eggw.db",
+      "name": "macros-5egpa",
+      "label": "Macros (5EGPA)",
+      "path": "./packs/macros-5egpa.db",
       "type": "Macro"
     }
   ],
