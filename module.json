@@ -63,14 +63,14 @@
     {
       "name": "class-features-5egpa",
       "label": "Class Features (5EGPA)",
-      "path": "./packs/classes-features-5egpa.db",
+      "path": "./packs/class-features-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
     {
       "name": "sub-classes-5egpa",
       "label": "Sub-Classes (5EGPA)",
-      "path": "./packs/subclasses-5egpa.db",
+      "path": "./packs/sub-classes-5egpa.db",
       "type": "Item",
       "system": "dnd5e"
     },
