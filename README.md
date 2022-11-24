@@ -1,5 +1,4 @@
-![](https://img.shields.io/badge/Foundry-v0.10.288-informational)
-![Latest Release Download Count](https://img.shields.io/github/downloads/thefehr/dnd5egoesgammaworld/latest/module.zip)
+![Latest Release Download Count](https://img.shields.io/github/downloads/thefehr/dnd5egoesgammaworld/latest/module.zip?style=for-the-badge&label=Module%20Downloads)
 
 <!--- Forge Bazaar Install % Badge -->
 <!--- replace <your-module-name> with the `name` in your manifest -->
