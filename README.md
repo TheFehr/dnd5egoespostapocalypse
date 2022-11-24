@@ -8,11 +8,10 @@
 # DnD 5e goes Postapocalypse
 Module to implement a postapocalyptic homebrew kit into DnD5e FoundryVTT system.
 
+## Status
+Currently still in development only a handful of mutations have been done.
+
 # Sources
 Based on the work of [TheDelphian](https://www.enworld.org/members/thedelphian.7022317/) on [enworld.org](https://www.enworld.org/threads/5e-compatible-gamma-world.674121/)
-
-# FoundryVTT Module
-
-Does something, probably
 
 ## Changelog
