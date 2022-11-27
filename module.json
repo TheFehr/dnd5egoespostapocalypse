@@ -32,10 +32,7 @@
     ]
   },
   "esmodules": [
-    "scripts/module.js"
-  ],
-  "scripts": [
-    "scripts/lib/lib.js"
+    "scripts/module.mjs"
   ],
   "styles": [
     "styles/module.css"
