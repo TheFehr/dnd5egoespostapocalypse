@@ -1,7 +1,9 @@
 import setupMutationScore from './mutationScore.js';
 import setupMutationPoints from './mutationPoints.js';
 
-import { silentLog } from '../utils';
+import { getGame } from '../utils';
+import { MutationFeatureTab } from './MutationFeatureTab.js';
+import { MutationFeature } from './MutationFeature';
 
 export default {
   setupMutationScore: (actor: Actor, mutation: Item) => {
@@ -14,18 +16,19 @@ export default {
 };
 
 export const mutationHooks = () => {
-  Hooks.on('createItem', (item: Item) => {
-    if (item.type !== 'feat') return;
-    if (!item.actor) return;
-    const matches = item.system.description.value.match(/(Mutation Score|Mutation Points)+/);
+  Hooks.on('createItem', async (item: Item) => {
+    await MutationFeature.potentialEvent('createItem', item);
+  });
 
-    if (matches && matches.length >= 1) {
-      if (matches.includes('Mutation Score')) {
-        setupMutationScore({ actor: item.actor, mutation: item });
-      } else if (matches.includes('Mutation Points')) {
-        silentLog(item, matches);
-        // setupMutationPoints({  })
-      }
+  Hooks.on('deleteItem', async (item: Item) => {
+    await MutationFeature.potentialEvent('deleteItem', item);
+  });
+
+  Hooks.on(`renderItemSheet5e`, async (app: unknown, html: JQuery, data: { item: Item; editable: boolean }) => {
+    if (!getGame().user?.isGM && getGame().settings.get('magicitems', 'hideFromPlayers')) {
+      return;
     }
+
+    await MutationFeatureTab.bind(app, html, data.item, data.editable);
   });
 };

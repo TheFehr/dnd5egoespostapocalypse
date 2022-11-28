@@ -1,10 +1,9 @@
-// Import TypeScript modules
 import constants, { Constants } from './constants';
 import { registerSettings } from './settings';
 import { preloadTemplates } from './preloadTemplates';
 
 import mutations, { mutationHooks } from './mutations';
-import { log } from './utils';
+import { getGame, log } from './utils';
 
 interface DND5EGPA {
   constants: Constants;
@@ -18,8 +17,13 @@ declare global {
 }
 
 // Initialize module
+Handlebars.registerHelper(`localizeDND5EGPA`, function (value: string) {
+  const prefix = value.startsWith(constants.MODULE_NAME_SHORT) ? '' : `${constants.MODULE_NAME_SHORT}.`;
+  return getGame().i18n.localize(`${prefix}${value}`);
+});
+
 Hooks.once('init', async () => {
-  log(true, 'dnd5egoespostapocalypse | Initializing dnd5egoespostapocalypse');
+  log(true, 'Initializing dnd5egoespostapocalypse');
 
   // Assign custom classes and constants here
 

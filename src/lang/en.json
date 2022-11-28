@@ -1,1 +1,10 @@
-{}
+{
+  "DND5E.SkillAni": "Beast Handling",
+  "DND5E.SkillArc": "Ancients",
+  "DND5E.SkillHis": "Culture",
+  "DND5E.SkillRel": "Robots",
+  "DND5EGPA.MutationFeatureEnabled": "Is a Mutation",
+  "DND5EGPA.MutationPointsEnabled": "Has Mutation Points",
+  "DND5EGPA.MutationPointsValue": "Mutation Points given",
+  "DND5EGPA.MutationPointsUsage": "Mutation Points used"
+}
