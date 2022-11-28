@@ -2,12 +2,11 @@ import constants, { Constants } from './constants';
 import { registerSettings } from './settings';
 import { preloadTemplates } from './preloadTemplates';
 
-import mutations, { mutationHooks } from './mutations';
+import { mutationHooks } from './mutations';
 import { getGame, log } from './utils';
 
 interface DND5EGPA {
   constants: Constants;
-  mutations: typeof mutations;
 }
 
 declare global {
@@ -58,6 +57,4 @@ mutationHooks();
 
 window.DND5EGPA = {
   constants,
-
-  mutations,
 };
