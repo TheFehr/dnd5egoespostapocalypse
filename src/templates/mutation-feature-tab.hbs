@@ -1,0 +1,23 @@
+<div id="mutation-feature-content">
+    <div class="form-group">
+        <label>{{localizeDND5EGPA "MutationFeatureEnabled"}}</label>
+        <input type="checkbox" name="flags.{{ constants.MODULE_ID }}.mutationFeature.active" {{checked
+            flags.active}}>
+    </div>
+    <div class="mutation-config">
+        <div class="form-group">
+            <label>{{localizeDND5EGPA "MutationPointsEnabled"}}</label>
+            <input type="checkbox" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationPoints.active" {{checked
+                flags.mutationPoints.active}}>
+        </div>
+        <div class="mutation-points-config">
+            <div class="form-group">
+                <label>{{localizeDND5EGPA "MutationPointsValue"}}</label>
+                <div class="form-fields">
+                    <input type="number" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationPoints.value"
+                        value="{{ flags.mutationPoints.value }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
