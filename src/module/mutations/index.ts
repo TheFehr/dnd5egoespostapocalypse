@@ -1,21 +1,21 @@
-import setupMutationScore from './mutation_score.mjs';
-import setupMutationPoints from './mutation_points.mjs';
+import setupMutationScore from './mutationScore.js';
+import setupMutationPoints from './mutationPoints.js';
 
-import { log } from '../helpers.mjs';
+import { silentLog } from '../utils';
 
 export default {
-  setupMutationScore: (actor, mutation) => {
+  setupMutationScore: (actor: Actor, mutation: Item) => {
     setupMutationScore({ actor, mutation });
   },
 
-  setupMutationPoints: (actor, effect, mutation) => {
+  setupMutationPoints: (actor: Actor, effect: ActiveEffect, mutation: Item) => {
     setupMutationPoints({ actor, effect, mutation });
-  }
-}
+  },
+};
 
 export const mutationHooks = () => {
-  Hooks.on('createItem', item => {
-    if (!item.type === 'feat') return;
+  Hooks.on('createItem', (item: Item) => {
+    if (item.type !== 'feat') return;
     if (!item.actor) return;
     const matches = item.system.description.value.match(/(Mutation Score|Mutation Points)+/);
 
@@ -23,9 +23,9 @@ export const mutationHooks = () => {
       if (matches.includes('Mutation Score')) {
         setupMutationScore({ actor: item.actor, mutation: item });
       } else if (matches.includes('Mutation Points')) {
-        log({ item, matches });
+        silentLog(item, matches);
         // setupMutationPoints({  })
       }
     }
   });
-} 
+};

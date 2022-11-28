@@ -1,0 +1,84 @@
+{
+  "id": "dnd5egoespostapocalypse",
+  "title": "DnD 5e - goes Postapocalypse",
+  "description": "Module to implement a postapocalyptic homebrew kit into DnD5e FoundryVTT system.",
+  "authors": [
+    {
+      "name": "TheFehr",
+      "url": "https://github.com/TheFehr"
+    }
+  ],
+  "url": "This is auto replaced",
+  "license": "MIT",
+  "readme": "https://github.com/TheFehr/dnd5egoespostapocalypse#readme",
+  "bugs": "https://github.com/TheFehr/dnd5egoespostapocalypse/issues",
+  "version": "This is auto replaced",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
+  },
+  "scripts": [],
+  "esmodules": ["module/dnd5egoespostapocalypse.js"],
+  "styles": ["styles/dnd5egoespostapocalypse.css"],
+  "packs": [
+    {
+      "name": "classes-5egpa",
+      "label": "Classes (5EGPA)",
+      "path": "packs/classes-5egpa.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "class-features-5egpa",
+      "label": "Class Features (5EGPA)",
+      "path": "packs/class-features-5egpa.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "sub-classes-5egpa",
+      "label": "Sub-Classes (5EGPA)",
+      "path": "packs/sub-classes-5egpa.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "mutations-5egpa",
+      "label": "Mutations (5EGPA)",
+      "path": "packs/mutations-5egpa.db",
+      "type": "Item",
+      "system": "dnd5e"
+    },
+    {
+      "name": "mutation-tables-5egpa",
+      "label": "Mutation Roll Tables (5EGPA)",
+      "path": "packs/mutation-tables-5egpa.db",
+      "type": "RollTable"
+    },
+    {
+      "name": "macros-5egpa",
+      "label": "Macros (5EGPA)",
+      "path": "packs/macros-5egpa.db",
+      "type": "Macro"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "dae"
+      }
+    ]
+  },
+  "system": ["dnd5e"],
+  "socket": false,
+  "manifest": "This is auto replaced",
+  "download": "This is auto replaced",
+  "library": false
+}
