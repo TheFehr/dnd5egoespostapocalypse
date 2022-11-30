@@ -82,6 +82,8 @@ export class MutationFeature {
     if (flags.mutationScore.active) {
       if (flags.mutationScore.value > 0) {
         properties.push(`Mutation Score ${flags.mutationScore.value} (${flags.mutationScore.mod})`);
+      } else {
+        properties.push(`Mutation Score`);
       }
     }
 

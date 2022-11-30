@@ -153,10 +153,24 @@ export class MutationFeatureTab {
 
   async renderProperties() {
     const html = this.html;
-    const propertiesList = html.find('.item-properties .properties-list');
 
     const props = await this.mutationFeature.properties();
+    if (props.length === 0) {
+      return;
+    }
+
+    props.splice(props.indexOf('Mutation'), 1);
+
+    if (props.length === 0) {
+      props.push('Passive / Defect');
+    }
+
+    const propertiesContainer = html.find('.item-properties');
+    const propertiesListHeader = $(`<h4 class="properties-header">Mutation</h4>`);
+    const propertiesList = $(`<ol class="properties-list"></ol>`);
     propertiesList.prepend(props.map((prop) => $(`<li>${prop}</li>`)));
+
+    propertiesContainer.prepend([propertiesListHeader, propertiesList]);
   }
 
   isActive() {
