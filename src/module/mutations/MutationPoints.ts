@@ -1,3 +1,4 @@
+import constants from '../constants';
 import { MutationFeature } from './MutationFeature';
 
 export interface MutationPoints {
@@ -47,6 +48,8 @@ export const mutationPoints_onCreated = async (mutation: MutationFeature) => {
   await mutationPointsFeature.update({
     system: {
       uses: {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         max: (mutationPointsFeature.system.uses.max || 0) + mutationPoints.value,
       },
     },
@@ -95,6 +98,8 @@ export const mutationPoints_onDeleted = async (mutation: MutationFeature) => {
     mutationPointsFeature.update({
       system: {
         uses: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           max: (mutationPointsFeature.system.uses.max || mutationPoints.value) - mutationPoints.value,
         },
       },

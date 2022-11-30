@@ -2,6 +2,8 @@ import constants from './constants.js';
 
 export const log = (force: boolean, ...args: unknown[]) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const isDebugging = getGame()?.modules.get('_dev-mode')?.api.getPackageDebugValue(constants.MODULE_ID);
 
     if (force || isDebugging) {

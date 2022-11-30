@@ -116,6 +116,8 @@ export class MutationFeature {
       if (item.getFlag) {
         flags = await item.getFlag(constants.MODULE_ID, 'mutationFeature');
       } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         flags = item.flags?.dnd5egoespostapocalypse?.mutationFeature;
       }
     } catch (e) {
@@ -152,23 +154,32 @@ export class MutationFeature {
     await mutationPoints_onDeleted(this);
   }
 
+  /* eslint-disable @typescript-eslint/ban-ts-comment */
   private readonlyFlags() {
     const flags = this.item.flags?.dnd5egoespostapocalypse?.mutationFeature || {};
 
     return {
+      // @ts-ignore
       active: flags?.activate || false,
       mutationPoints: {
+        // @ts-ignore
         active: flags?.mutationPoints?.active || false,
+        // @ts-ignore
         value: flags?.mutationPoints?.value || 0,
+        // @ts-ignore
         usage: flags?.mutationPoints?.usage || 0,
       },
       mutationScore: {
+        // @ts-ignore
         active: flags?.mutationScore?.active || false,
+        // @ts-ignore
         value: flags?.mutationScore?.value || 0,
+        // @ts-ignore
         mod: flags?.mutationScore?.mod || 0,
       },
     } as MutationFeatureFlags;
   }
+  /* eslint-enable @typescript-eslint/ban-ts-comment */
 
   private async ensureFlags(reset = false) {
     const flags = await this.item.getFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE);

@@ -1,20 +1,20 @@
 {
   "private": true,
   "name": "dnd5egoespostapocalypse",
-  "description": "<description of the package>",
-  "license": "<please choose an appropriate license. https://choosealicense.com/ is a great place to get more information if you are unsure>",
-  "homepage": "<optionally the URL to your repository or another homepage>",
+  "description": "Module to implement a postapocalyptic homebrew kit into DnD5e FoundryVTT system.",
+  "license": "MIT",
+  "homepage": "https://github.com/TheFehr/dnd5egoespostapocalypse",
   "repository": {
     "type": "git",
-    "url": "<optionally the URL to your repository>"
+    "url": "https://github.com/TheFehr/dnd5egoespostapocalypse"
   },
   "bugs": {
-    "url": "<optionally the URL to your issues list>"
+    "url": "https://github.com/TheFehr/dnd5egoespostapocalypse/issues"
   },
   "contributors": [
     {
-      "name": "<your name>",
-      "email": "<optionally your e-mail address>"
+      "name": "TheFehr",
+      "email": "philipp+foundryvtt@thefehr.me"
     }
   ],
   "type": "module",
