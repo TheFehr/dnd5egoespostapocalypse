@@ -6,5 +6,8 @@
   "DND5EGPA.MutationFeatureEnabled": "Is a Mutation",
   "DND5EGPA.MutationPointsEnabled": "Has Mutation Points",
   "DND5EGPA.MutationPointsValue": "Mutation Points given",
-  "DND5EGPA.MutationPointsUsage": "Mutation Points used"
+  "DND5EGPA.MutationPointsUsage": "Mutation Points used",
+  "DND5EGPA.MutationScoreEnabled": "Has Mutation Score",
+  "DND5EGPA.MutationScoreValue": "Mutation Score",
+  "DND5EGPA.MutationScoreModifier": "Mutation Score Mod"
 }

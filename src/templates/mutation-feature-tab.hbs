@@ -18,6 +18,34 @@
                         value="{{ flags.mutationPoints.value }}">
                 </div>
             </div>
+            <div class="form-group">
+                <label>{{localizeDND5EGPA "MutationPointsUsage"}}</label>
+                <div class="form-fields">
+                    <input type="number" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationPoints.usage"
+                        value="{{ flags.mutationPoints.usage }}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localizeDND5EGPA "MutationScoreEnabled"}}</label>
+            <input type="checkbox" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationScore.active" {{checked
+                flags.mutationScore.active}}>
+        </div>
+        <div class="mutation-score-config">
+            <div class="form-group">
+                <label>{{localizeDND5EGPA "MutationScoreValue"}}</label>
+                <div class="form-fields">
+                    <input type="number" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationScore.value"
+                        value="{{ flags.mutationScore.value }}" readonly="readonly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{{localizeDND5EGPA "MutationScoreModifier"}}</label>
+                <div class="form-fields">
+                    <input type="number" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationScore.mod"
+                        value="{{ flags.mutationScore.mod }}" readonly="readonly">
+                </div>
+            </div>
         </div>
     </div>
 </div>

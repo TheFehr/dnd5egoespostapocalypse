@@ -1,7 +1,9 @@
 import constants from '../constants';
-import { MutationFeature, MutationFeatureFlags } from './MutationFeature';
+import { MutationFeature } from './MutationFeature';
 
-const mutationFeatureTabs: MutationFeatureTab[] = [];
+const mutationFeatureTabs: {
+  [key: string]: MutationFeatureTab;
+} = {};
 
 interface AreaVisibilityTrigger {
   module: string;
@@ -19,16 +21,27 @@ const triggerValuesToAreas: AreaVisibilityTrigger[] = [
     area: '.mutation-points-config',
     parent: 'mutation',
   },
+  {
+    module: 'mutationScore',
+    area: '.mutation-score-config',
+    parent: 'mutation',
+  },
 ];
 
+export interface AppProps {
+  id: string;
+  _tabs: { activate: (arg0: string) => void }[];
+  setPosition: () => void;
+}
+
 export class MutationFeatureTab {
-  app: any;
+  app: AppProps;
   activate: boolean;
   html: JQuery<HTMLElement>;
   editable: boolean;
   mutationFeature: MutationFeature;
 
-  static async bind(app: any, html: JQuery, item: Item, editable: boolean) {
+  static async bind(app: AppProps, html: JQuery, item: Item, editable: boolean) {
     if (item.type === 'feat') {
       let tab = mutationFeatureTabs[app.id];
       if (!tab) {
@@ -40,14 +53,12 @@ export class MutationFeatureTab {
     }
   }
 
-  constructor(app: any, html: JQuery, item: Item, editable: boolean) {
+  constructor(app: AppProps, html: JQuery, item: Item, editable: boolean) {
     this.app = app;
     this.html = html;
 
     this.editable = editable;
     this.mutationFeature = new MutationFeature(item, !this.editable);
-
-    // this.hack(this.app); // Do we need it? It's very hacky
 
     this.activate = false;
   }
@@ -75,21 +86,11 @@ export class MutationFeatureTab {
     await this.render();
   }
 
-  hack(app: any) {
-    // eslint-disable-next-line
-    const tab = this;
-    app.setPosition = function (position = {}) {
-      // eslint-disable-next-line
-      position.height = tab.isActive() && !position.height ? 'auto' : position.height;
-      return this.__proto__.__proto__.setPosition.apply(this, [position]);
-    };
-  }
-
   async render() {
     const flags = await this.mutationFeature.flags(this.editable);
     const enabled = flags?.active || false;
 
-    await this.renderProperties(flags);
+    await this.renderProperties();
 
     const template = await renderTemplate(`modules/${constants.MODULE_ID}/templates/mutation-feature-tab.hbs`, {
       flags,
@@ -150,17 +151,12 @@ export class MutationFeatureTab {
     });
   }
 
-  async renderProperties(flags: MutationFeatureFlags) {
+  async renderProperties() {
     const html = this.html;
     const propertiesList = html.find('.item-properties .properties-list');
 
-    if (flags.active) {
-      propertiesList.prepend('<li>Mutation</li>');
-    }
-
-    if (flags.mutationPoints.active) {
-      propertiesList.append(`<li>${flags.mutationPoints.value} Mutation Points</li>`);
-    }
+    const props = await this.mutationFeature.properties();
+    propertiesList.prepend(props.map((prop) => $(`<li>${prop}</li>`)));
   }
 
   isActive() {

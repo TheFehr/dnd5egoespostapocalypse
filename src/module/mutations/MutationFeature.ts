@@ -1,14 +1,6 @@
 import constants from '../constants';
-
-const MUTATION_POINTS_FEATURE = {
-  name: 'Mutation Points',
-  system: {
-    activation: { type: 'special', cost: null, condition: '' },
-    uses: { value: 0, max: 0, per: 'lr', recovery: '' },
-  },
-  type: 'feat',
-  img: 'icons/svg/biohazard.svg',
-};
+import { MutationPoints, mutationPoints_onCreated, mutationPoints_onDeleted } from './MutationPoints';
+import { MutationScore, mutationScore_onCreated } from './MutationScore';
 
 export interface MutationFeatureFlags {
   active: boolean;
@@ -16,25 +8,45 @@ export interface MutationFeatureFlags {
   mutationScore: MutationScore;
 }
 
-export interface MutationPoints {
-  active: boolean;
-  value: number;
-  usage: number;
-}
-
-export interface MutationScore {
-  active: boolean;
-  value: number;
-  mod: number;
+interface MutationFeatureItem {
+  flags?: {
+    [key: string]: unknown | undefined;
+    dnd5egoespostapocalypse?: {
+      mutationFeature?: MutationFeatureFlags;
+    };
+  };
+  getChatData: (...arg0: []) => Promise<{ properties: string[] } & unknown>;
 }
 
 export class MutationFeature {
-  item: Item;
+  item: Item & MutationFeatureItem;
   readonly: boolean;
 
   constructor(item: Item, readonly: boolean) {
-    this.item = item;
+    this.item = item as Item & MutationFeatureItem;
     this.readonly = readonly;
+
+    this.hackMethods();
+  }
+
+  hackMethods() {
+    const getChatData = this.item.getChatData;
+
+    this.item.getChatData = async (...args: []) => {
+      const flags = await this.flags();
+      const { properties, ...parentData } = await getChatData.call(this.item, ...args);
+
+      if (!flags.active) {
+        return { properties, ...parentData };
+      }
+      const mutationProperties = await this.properties();
+      mutationProperties.forEach((property) => {
+        if (!properties.includes(property)) {
+          properties.push(property);
+        }
+      });
+      return { properties, ...parentData };
+    };
   }
 
   async activeModules(): Promise<string[]> {
@@ -43,9 +55,37 @@ export class MutationFeature {
     return [
       { module: 'mutation', isActive: flags.active },
       { module: 'mutationPoints', isActive: flags.mutationPoints.active },
+      { module: 'mutationScore', isActive: flags.mutationScore.active },
     ]
       .filter(({ isActive }) => isActive)
       .map(({ module }) => module);
+  }
+
+  async properties(): Promise<string[]> {
+    const flags = await this.flags();
+    if (!flags.active) {
+      return [];
+    }
+
+    const properties: string[] = [];
+    properties.push('Mutation');
+
+    if (flags.mutationPoints.active) {
+      if (flags.mutationPoints.value > 0) {
+        properties.push(`${flags.mutationPoints.value} Mutation Points`);
+      }
+      if (flags.mutationPoints.usage > 0) {
+        properties.push(`${flags.mutationPoints.usage} Muation Points / Usage`);
+      }
+    }
+
+    if (flags.mutationScore.active) {
+      if (flags.mutationScore.value > 0) {
+        properties.push(`Mutation Score ${flags.mutationScore.value} (${flags.mutationScore.mod})`);
+      }
+    }
+
+    return properties;
   }
 
   async flags(reset = false, retry = 0): Promise<MutationFeatureFlags> {
@@ -53,44 +93,33 @@ export class MutationFeature {
       throw new Error("Can't seem to load / prepare flags!");
     }
 
-    const flags = await this.item.getFlag(constants.MODULE_ID, 'mutationFeature');
+    const flags = await this.item.getFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE);
 
     if (flags != undefined && (flags as MutationFeatureFlags)) {
       return flags as MutationFeatureFlags;
     }
 
     if (this.readonly) {
-      return {
-        active: flags?.activate || false,
-        mutationPoints: {
-          active: flags?.mutationPoints?.active || false,
-          value: flags?.mutationPoints?.value || 0,
-          usage: flags?.mutationPoints?.usage || 0,
-        },
-        mutationScore: {
-          active: flags?.mutationScore?.active || false,
-          value: flags?.mutationScore?.value || 0,
-          mod: flags?.mutationScore?.mod || 0,
-        },
-      } as MutationFeatureFlags;
+      return this.readonlyFlags();
     }
 
     await this.ensureFlags(reset);
     return await this.flags(reset, retry + 1);
   }
 
-  async enabled(): Promise<boolean> {
-    return (await this.flags()).active;
-  }
-
-  async mutationPoints(): Promise<MutationPoints> {
-    return (await this.flags()).mutationPoints;
-  }
-
   static async itemIsA(item: Item): Promise<boolean> {
-    const flags = await item.getFlag(constants.MODULE_ID, 'mutationFeature');
+    let flags = undefined;
 
-    return flags != undefined && (flags as MutationFeatureFlags).active;
+    try {
+      if (item.getFlag) {
+        flags = await item.getFlag(constants.MODULE_ID, 'mutationFeature');
+      } else {
+        flags = item.flags?.dnd5egoespostapocalypse?.mutationFeature;
+      }
+    } catch (e) {
+    } finally {
+      return flags != undefined && (flags as MutationFeatureFlags).active;
+    }
   }
 
   static async potentialEvent(event: 'createItem' | 'deleteItem', item: Item) {
@@ -113,91 +142,36 @@ export class MutationFeature {
   }
 
   async created() {
-    if (await this.enabled()) {
-      await this.mutationPoints_onCreated();
-    }
+    await mutationPoints_onCreated(this);
+    await mutationScore_onCreated(this);
   }
 
   async deleted() {
-    if (await this.enabled()) {
-      await this.mutationPoints_onDeleted();
-    }
+    await mutationPoints_onDeleted(this);
   }
 
-  async mutationPoints_onCreated() {
-    const mutationPoints = await this.mutationPoints();
-    let mutationPointsFeature = this.item.actor?.items.find((item) => item.name === MUTATION_POINTS_FEATURE.name);
+  private readonlyFlags() {
+    const flags = this.item.flags?.dnd5egoespostapocalypse?.mutationFeature || {};
 
-    if (!mutationPointsFeature) {
-      const created = await this.item.actor?.createEmbeddedDocuments('Item', [
-        {
-          ...MUTATION_POINTS_FEATURE,
-        },
-      ]);
-
-      if (created && created[0]) {
-        mutationPointsFeature = created[0] as Item;
-      }
-    }
-
-    if (!mutationPointsFeature) {
-      console.error(`${constants.MODULE_ID} | Can't create Feature on Actor: ${this.item.actor?.name}`);
-      return;
-    }
-
-    await mutationPointsFeature.update({
-      system: {
-        uses: {
-          max: (mutationPointsFeature.system.uses.max || 0) + mutationPoints.value,
-        },
+    return {
+      active: flags?.activate || false,
+      mutationPoints: {
+        active: flags?.mutationPoints?.active || false,
+        value: flags?.mutationPoints?.value || 0,
+        usage: flags?.mutationPoints?.usage || 0,
       },
-    });
-
-    await this.item.update({
-      system: {
-        consume: {
-          type: 'charges',
-          target: mutationPointsFeature.id,
-          amount: 1,
-        },
+      mutationScore: {
+        active: flags?.mutationScore?.active || false,
+        value: flags?.mutationScore?.value || 0,
+        mod: flags?.mutationScore?.mod || 0,
       },
-    });
-  }
-
-  async mutationPoints_onDeleted() {
-    const mutationPoints = await this.mutationPoints();
-    const mutationPointsFeature = this.item.actor?.items.find((item) => item.name === MUTATION_POINTS_FEATURE.name);
-
-    if (!mutationPointsFeature) {
-      return;
-    }
-
-    const otherItems = await Promise.all(
-      this.item.actor?.items.map(async (item) => {
-        const isMutation = await MutationFeature.itemIsA(item);
-
-        return { item, isMutation };
-      }) as Promise<{ item: Item; isMutation: boolean }>[],
-    );
-    const otherMutationFeatures = otherItems.filter(({ isMutation }) => isMutation);
-
-    if ((!otherMutationFeatures || otherMutationFeatures.length === 0) && mutationPointsFeature.id) {
-      this.item.actor?.deleteEmbeddedDocuments('Item', [mutationPointsFeature.id]);
-    } else {
-      mutationPointsFeature.update({
-        system: {
-          uses: {
-            max: (mutationPointsFeature.system.uses.max || 0) - mutationPoints.value,
-          },
-        },
-      });
-    }
+    } as MutationFeatureFlags;
   }
 
   private async ensureFlags(reset = false) {
-    const flags = await this.item.getFlag(constants.MODULE_ID, 'mutationFeature');
+    const flags = await this.item.getFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE);
     if (reset || flags == undefined) {
-      await this.item.setFlag(constants.MODULE_ID, 'mutationFeature', {
+      await this.item.setFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE, {
         active: false,
         mutationPoints: {
           active: false,
