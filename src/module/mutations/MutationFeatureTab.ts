@@ -95,6 +95,7 @@ export class MutationFeatureTab {
     const template = await renderTemplate(`modules/${constants.MODULE_ID}/templates/mutation-feature-tab.hbs`, {
       flags,
       constants,
+      hasActor: this.mutationFeature.item.actor !== null,
     });
 
     let el = this.html.find(`#mutation-feature-content`);
@@ -166,11 +167,18 @@ export class MutationFeatureTab {
     }
 
     const propertiesContainer = html.find('.item-properties');
-    const propertiesListHeader = $(`<h4 class="properties-header">Mutation</h4>`);
+    const existingListHeader = [...html.find('h4.properties-header')].find((h4) => h4.innerText === 'Mutation');
+
     const propertiesList = $(`<ol class="properties-list"></ol>`);
     propertiesList.prepend(props.map((prop) => $(`<li>${prop}</li>`)));
 
-    propertiesContainer.prepend([propertiesListHeader, propertiesList]);
+    if (existingListHeader) {
+      const existingPropertiesList = $(existingListHeader).next('ol');
+      existingPropertiesList.replaceWith(propertiesList);
+    } else {
+      const propertiesListHeader = $(`<h4 class="properties-header">Mutation</h4>`);
+      propertiesContainer.prepend([propertiesListHeader, propertiesList]);
+    }
   }
 
   isActive() {

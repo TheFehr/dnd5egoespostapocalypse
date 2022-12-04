@@ -1,4 +1,5 @@
 import constants from '../constants';
+import { calculateModifier } from '../utils';
 import { MutationPoints, mutationPoints_onCreated, mutationPoints_onDeleted } from './MutationPoints';
 import { MutationScore, mutationScore_onCreated } from './MutationScore';
 
@@ -81,7 +82,7 @@ export class MutationFeature {
 
     if (flags.mutationScore.active) {
       if (flags.mutationScore.value > 0) {
-        properties.push(`Mutation Score ${flags.mutationScore.value} (${flags.mutationScore.mod})`);
+        properties.push(`Mutation&nbsp;Score&nbsp;${flags.mutationScore.value}&nbsp;(${flags.mutationScore.mod})`);
       } else {
         properties.push(`Mutation Score`);
       }
@@ -98,6 +99,7 @@ export class MutationFeature {
     const flags = await this.item.getFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE);
 
     if (flags != undefined && (flags as MutationFeatureFlags)) {
+      await this.updateFlags(flags as MutationFeatureFlags);
       return flags as MutationFeatureFlags;
     }
 
@@ -180,6 +182,16 @@ export class MutationFeature {
     } as MutationFeatureFlags;
   }
   /* eslint-enable @typescript-eslint/ban-ts-comment */
+
+  private async updateFlags(flags: MutationFeatureFlags) {
+    if (flags.mutationScore.active && flags.mutationScore.value) {
+      await this.item.setFlag(
+        constants.MODULE_ID,
+        `${constants.FLAGS.MUTATION_FEATURE}.mutationScore.mod`,
+        calculateModifier(flags.mutationScore.value),
+      );
+    }
+  }
 
   private async ensureFlags(reset = false) {
     const flags = await this.item.getFlag(constants.MODULE_ID, constants.FLAGS.MUTATION_FEATURE);

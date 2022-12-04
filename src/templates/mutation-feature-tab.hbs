@@ -36,7 +36,7 @@
                 <label>{{localizeDND5EGPA "MutationScoreValue"}}</label>
                 <div class="form-fields">
                     <input type="number" name="flags.{{ constants.MODULE_ID }}.mutationFeature.mutationScore.value"
-                        value="{{ flags.mutationScore.value }}" readonly="readonly">
+                        value="{{ flags.mutationScore.value }}" {{#unless hasActor}}readonly="readonly"{{/unless}}>
                 </div>
             </div>
             <div class="form-group">
