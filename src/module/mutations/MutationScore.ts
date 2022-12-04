@@ -1,4 +1,5 @@
 import constants from '../constants';
+import { calculateModifier } from '../utils';
 import { MutationFeature } from './MutationFeature';
 
 export interface MutationScore {
@@ -34,10 +35,6 @@ const updateItem = async (mutation: Item, score: number, mod: number) => {
       mod,
     },
   });
-};
-
-const calculateModifier = (score: number) => {
-  return Math.floor((score - 10) / 2);
 };
 
 const automaticSetup = async ({ actor, mutation }: { actor: Actor; mutation: Item }, retry = 0) => {

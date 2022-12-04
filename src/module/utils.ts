@@ -37,3 +37,7 @@ export const filterAsync = async <T>(
   const filterMap = await mapAsync(array, callbackfn);
   return array.filter((value, index) => filterMap[index]);
 };
+
+export const calculateModifier = (score: number) => {
+  return Math.floor((score - 10) / 2);
+};
